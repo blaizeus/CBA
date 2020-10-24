@@ -2,7 +2,7 @@ var random = [
     {
         op1ph1: "I should eat a Pizza...",
         op1ph2: "It tastes great!",
-        op1ph3: "Doesn't do my waistline any favours",
+        op1ph3: "No favours for my waistline",
         op2ph1: "I should go for a run...",
         op2ph2: "Does favours for my waistline",
         op2ph3: "Effort"    
