@@ -40,6 +40,9 @@ function OptionCard(props)
 
     function handleClick(event)
     {   
+        
+
+
         do 
         {
             var rating = prompt("How important is this out of 10?");  
@@ -71,8 +74,75 @@ function OptionCard(props)
          }
      )
 
-     event.target.blur()
+        event.target.blur()
 
+    }
+
+    function fixCardHeight(event) 
+    {       
+        var element1 = document.getElementsByClassName("half-column")[0];
+        var element2 = document.getElementsByClassName("half-column")[1];
+        var element3 = document.getElementsByClassName("half-column")[2];
+        var element4 = document.getElementsByClassName("half-column")[3];
+        var li1Length = document.getElementsByTagName("ul")[0].children.length;
+        var li2Length = document.getElementsByTagName("ul")[1].children.length;
+        var li3Length = document.getElementsByTagName("ul")[2].children.length;
+        var li4Length = document.getElementsByTagName("ul")[3].children.length;
+        var liArray = [li1Length, li2Length, li3Length, li4Length]
+        var proOrCon;
+        var maxLi = Math.max(...liArray)
+        var specificLi;
+
+        (event.target.name === "new pro button")?
+        proOrCon = "pro" : proOrCon = "con"
+        
+        if(props.opid == "1") {
+            if(proOrCon === "pro") {
+                specificLi = 0;   
+            }
+            else {
+                specificLi = 1;
+            }
+        }
+        else {
+            if(proOrCon === "pro") {
+                specificLi = 2;
+            }
+            else {
+                specificLi = 3;
+
+            }
+        }
+
+        console.log("specific Li is " + specificLi);
+
+
+
+        if(maxLi == document.getElementsByTagName("ul")[specificLi].children.length) {
+            console.log("Exceeding max");
+            
+            if(maxLi > 0) {
+                var thisElement = document.getElementsByClassName("half-column")[specificLi]
+                var ogHeight = thisElement.offsetHeight;
+                var liHeight = document.getElementsByClassName("rating")[0].offsetHeight;
+                var newHeight = ogHeight + liHeight;
+                element1.style.height = newHeight + "px";
+                element2.style.height = newHeight + "px";
+                element3.style.height = newHeight + "px";
+                element4.style.height = newHeight + "px";
+                
+            }
+            else {
+                var thisElement = document.getElementsByClassName("half-column")[specificLi]
+                var ogHeight = thisElement.offsetHeight;
+                var newHeight = ogHeight + 40;
+                element1.style.height = newHeight + "px";
+                element2.style.height = newHeight + "px";
+                element3.style.height = newHeight + "px";
+                element4.style.height = newHeight + "px";
+            }
+        }
+        
     }
 
 
@@ -98,10 +168,13 @@ function OptionCard(props)
         }
     }
 
+    
 
 
-    return <div className="col-md-6">
+    return <div className="option-card">
+
         <h1><strong>Option {props.opid}</strong></h1>
+
         <div className="input-group mb-3">
             <input 
             className="form-control option-input-box" 
@@ -110,86 +183,72 @@ function OptionCard(props)
             ></input>
         </div>
             
-
-        <div className="row">
-            <div className="col-sm-6">
-                <h1>Pros</h1>
-
-                <div className="input-group mb-3">
-
-                    <input 
-                    className="form-control"
-                    onClick={clickBox}
-                    onChange={handleChange} 
-                    type="text" 
-                    placeholder={ph2}
-                    value={pro}
-                    name="new pro text"
-                    ></input>
-
-                    <div className="input-group-append">
-                        <button 
-                        className="btn btn-outline-secondary" 
-                        onClick={handleClick} 
-                        name="new pro button" 
-                        >+</button>
-                    </div>
-                    
+        <div className="half-column">
+            <h1>Pros</h1>
+            <div className="input-group mb-3">
+                <input 
+                className="form-control"
+                onClick={clickBox}
+                onChange={handleChange} 
+                type="text" 
+                placeholder={ph2}
+                value={pro}
+                name="new pro text"
+                ></input>
+                <div className="input-group-append">
+                    <button 
+                    className="btn btn-outline-secondary" 
+                    onClick={(event) => {
+                        handleClick(event);
+                        fixCardHeight(event);
+                        }} 
+                    name="new pro button" 
+                    >+</button>
                 </div>
-                
-                
-
-                <ul>
-                    {proList.map(eachPro => {
-                        return <li>
-                        
-                        <div className="list-text" >{eachPro[0]}</div>
-                        <div className="rating">{eachPro[1]}</div>
-                        
-                        </li>
-                    })}
-                </ul>
-
             </div>
+            <ul>
+                {proList.map(eachPro => {
+                    return <li>
+                    <div className="list-text" >{eachPro[0]}</div>
+                    <div className="rating">{eachPro[1]}</div>
+                    </li>
+                })}
+            </ul>
+        </div>
 
-            <div className="col-sm-6">
-                <h1>Cons</h1>
-
-                <div className="input-group mb-3">
-
-                    <input 
-                    className="form-control"
-                    onClick={clickBox}
-                    onChange={handleChange} 
-                    type="text" 
-                    placeholder={ph3}
-                    value={con}
-                    ></input>
-
-                    <div className="input-group-append">
-                        <button className="btn btn-outline-secondary" onClick={handleClick}>+</button>
-                    </div>
-                    
-                </div>         
-
-
-                <ul>
-                    {conList.map(eachCon => {
-                        return <li>
-                        <div className="list-text" >{eachCon[0]}</div>
-                        <div className="rating">{eachCon[1]}</div>
-                        </li>
-                    })}
-                </ul>
-
-            </div>
-
+        <div className="half-column">
+            <h1>Cons</h1>
+            <div className="input-group mb-3">
+                <input 
+                className="form-control"
+                onClick={clickBox}
+                onChange={handleChange} 
+                type="text" 
+                placeholder={ph3}
+                value={con}
+                ></input>
+                <div className="input-group-append">
+                    <button 
+                    className="btn btn-outline-secondary" 
+                    onClick={(event) => {
+                        handleClick(event);
+                        fixCardHeight(event);
+                        }}
+                    >+</button>
+                </div>
+            </div>         
+            <ul>
+                {conList.map(eachCon => {
+                    return <li>
+                    <div className="list-text" >{eachCon[0]}</div>
+                    <div className="rating">{eachCon[1]}</div>
+                    </li>
+                })}
+            </ul>
         </div>
 
 </div>
 
-
-    
     
 }
 

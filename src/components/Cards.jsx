@@ -15,17 +15,14 @@ function Cards(props)
     }
 
 
-
     return (
-    <div className="container-fluid">
-        <div className="row">
-
+    
+        <div className="options">
             {myOptions.map((eachOption, index) => {
                 return <OptionCard randomNumber={randomNumber} opid={eachOption} loadDecision={props.loadDecision}/>
             })}
-
         </div>
-    </div>
+    
 
 )}
 

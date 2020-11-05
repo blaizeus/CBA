@@ -140,7 +140,7 @@ function App()
         <div>
             <Switch>
                 <Route path="/" exact render={() => {
-                    return <div>
+                    return <div className="container-all">
                         <Header />
                         <Cards numberOfCards={2} loadDecision={loadDecision} />
                         <GreenButton 
@@ -153,7 +153,7 @@ function App()
                 }} />
 
                 <Route path="/results" render={() => {
-                    return <div>
+                    return <div className="result-page">
                         <Result correctChoice={correctChoice}/>
                     </div>
                 }} />
